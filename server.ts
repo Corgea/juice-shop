@@ -2,6 +2,8 @@
  * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
+import csrf from 'csurf'
+import cookieParser from 'cookie-parser'
 import dataErasure from './routes/dataErasure'
 import fs = require('fs')
 import { type Request, type Response, type NextFunction } from 'express'
@@ -94,6 +96,14 @@ const likeProductReviews = require('./routes/likeProductReviews')
 const security = require('./lib/insecurity')
 const datacreator = require('./data/datacreator')
 const app = express()
+
+app.use(cookieParser())
+app.use(csrf({ cookie: true }))
+
+app.use(function (req: Request, res: Response, next: NextFunction) {
+  res.locals._csrf = req.csrfToken()
+  next()
+})
 const server = require('http').Server(app)
 const appConfiguration = require('./routes/appConfiguration')
 const captcha = require('./routes/captcha')
