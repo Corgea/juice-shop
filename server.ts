@@ -251,7 +251,10 @@ restoreOverwrittenFilesWithOriginals().then(() => {
   app.use('/encryptionkeys/:file', keyServer())
 
   /* /logs directory browsing */ // vuln-code-snippet neutral-line accessLogDisclosureChallenge
-  app.use('/support/logs', serveIndexMiddleware, serveIndex('logs', { icons: true, view: 'details' })) // vuln-code-snippet vuln-line accessLogDisclosureChallenge
+  // Disable directory listing
+  app.use('/support/logs', (req: Request, res: Response, next: NextFunction) => {
+    res.status(403).send('Access denied');
+  });
   app.use('/support/logs', verify.accessControlChallenges()) // vuln-code-snippet hide-line
   app.use('/support/logs/:file', logFileServer()) // vuln-code-snippet vuln-line accessLogDisclosureChallenge
 
