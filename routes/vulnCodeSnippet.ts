@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import path from 'path'
 import { type NextFunction, type Request, type Response } from 'express'
 import fs from 'fs'
 import yaml from 'js-yaml'
@@ -91,7 +92,9 @@ exports.checkVulnLines = () => async (req: Request<Record<string, unknown>, Reco
   const verdict = getVerdict(vulnLines, neutralLines, selectedLines)
   let hint
   if (fs.existsSync('./data/static/codefixes/' + key + '.info.yml')) {
-    const codingChallengeInfos = yaml.load(fs.readFileSync('./data/static/codefixes/' + key + '.info.yml', 'utf8'))
+    
+    const safeKey = path.basename(key);
+    const codingChallengeInfos = yaml.load(fs.readFileSync(path.join('./data/static/codefixes/', safeKey + '.info.yml'), 'utf8'))
     if (codingChallengeInfos?.hints) {
       if (accuracy.getFindItAttempts(key) > codingChallengeInfos.hints.length) {
         if (vulnLines.length === 1) {
