@@ -247,7 +247,9 @@ restoreOverwrittenFilesWithOriginals().then(() => {
   app.use('/ftp/quarantine/:file', quarantineServer()) // vuln-code-snippet neutral-line directoryListingChallenge
 
   /* /encryptionkeys directory browsing */
-  app.use('/encryptionkeys', serveIndexMiddleware, serveIndex('encryptionkeys', { icons: true, view: 'details' }))
+  app.use('/encryptionkeys', (req: Request, res: Response, next: NextFunction) => {
+    res.status(403).send('Access denied');
+  });
   app.use('/encryptionkeys/:file', keyServer())
 
   /* /logs directory browsing */ // vuln-code-snippet neutral-line accessLogDisclosureChallenge
