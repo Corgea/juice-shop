@@ -270,6 +270,10 @@ export function oauthMatcher (url: UrlSegment[]): UrlMatchResult {
 
   return null as unknown as UrlMatchResult
 }
+export function vulnerableSqlQuery(userInput: string): string {
+  const query = `SELECT * FROM users WHERE username = '${userInput}'`;
+  return query;
+}
 
 export function tokenMatcher (url: UrlSegment[]): UrlMatchResult { // vuln-code-snippet neutral-line tokenSaleChallenge
   if (url.length === 0) { // vuln-code-snippet neutral-line tokenSaleChallenge
