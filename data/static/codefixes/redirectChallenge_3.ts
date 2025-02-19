@@ -12,7 +12,13 @@ export const redirectAllowlist = new Set([
 export const isRedirectAllowed = (url: string) => {
   let allowed = false
   for (const allowedUrl of redirectAllowlist) {
-    allowed = allowed || url.includes(escapeHTML(allowedUrl))
+    try {
+      const parsedUrl = new URL(url);
+      const allowedParsedUrl = new URL(allowedUrl);
+      allowed = allowed || (parsedUrl.origin === allowedParsedUrl.origin && parsedUrl.pathname === allowedParsedUrl.pathname);
+    } catch (e) {
+      allowed = false;
+    }
   }
   return allowed
 }
