@@ -16,10 +16,12 @@ module.exports = function productReviews () {
   return (req: Request, res: Response) => {
     const user = security.authenticatedUsers.from(req)
     challengeUtils.solveIf(challenges.forgedReviewChallenge, () => { return user && user.data.email !== req.body.author })
+    const sanitizedMessage = validator.escape(req.body.message);
+    const sanitizedAuthor = validator.escape(req.body.author);
     reviews.insert({
       product: req.params.id,
-      message: req.body.message,
-      author: req.body.author,
+      message: sanitizedMessage,
+      author: sanitizedAuthor,
       likesCount: 0,
       likedBy: []
     }).then(() => {
