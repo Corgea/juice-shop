@@ -1,0 +1,14 @@
+# This is the corgea YAML file used for defining and managing security policies within the Juice Shop application.
+# For more information, visit: https://docs.corgea.app/policies
+version: 1  # Specifies the version of the corgea YAML standard being used. Update only if the standard changes.
+policies:
+  - type: "scan"
+    description: >
+      This section outlines the security policies specific to the Juice Shop application.
+      The 'public' directory, which contains static assets, should be monitored for unauthorized changes
+      that could lead to security breaches. The 'src' directory, containing the main application code,
+      must be regularly scanned for vulnerabilities such as Cross-Site Scripting (XSS) and SQL injection.
+      Additional security measures include:
+      - Regularly update dependencies to patch known vulnerabilities.
+      - Implement Content Security Policy (CSP) to mitigate XSS attacks.
+      - Ensure sensitive data is encrypted and access is restricted.

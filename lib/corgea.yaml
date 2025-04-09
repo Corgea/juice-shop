@@ -1,0 +1,30 @@
+# This is the corgea YAML file used for defining and managing security policies within the library directory of applications.
+# For more information, visit: https://docs.corgea.app/policies
+version: 1  # Specifies the version of the corgea YAML standard being used. Update only if the standard changes.
+policies:
+  - type: "scan"
+    description: >
+      This section defines security measures for the 'lib' directory, which contains shared libraries and modules.
+      It's crucial to ensure that these libraries are free from vulnerabilities that could be exploited by attackers.
+      The 'lib' directory should be regularly scanned for outdated dependencies and potential security flaws.
+      Additional checks include:
+      - Regularly update libraries to patch known vulnerabilities.
+      - Implement access controls to restrict unauthorized modifications.
+
+  - type: "false_positive"
+    description: >
+      Identify and flag potential false positive vulnerabilities by analyzing patterns that
+      commonly lead to incorrect vulnerability detection, such as overly broad regex patterns
+      or misconfigured security rules. This policy aims to reduce noise in vulnerability reports
+      by ensuring that only genuine security issues are highlighted.
+    cwes:
+      - 22
+
+  - type: "fix"
+    description: >
+      This policy ensures that libraries are properly validated to prevent unauthorized access,
+      resources are correctly managed post-use, and inputs are sanitized to avert injection attacks.
+    cwes:
+      - 22
+      - 25
+      - 78

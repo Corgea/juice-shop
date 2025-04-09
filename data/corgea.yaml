@@ -1,0 +1,33 @@
+# This is the corgea YAML file used for defining and managing security policies within applications.
+# For more information, visit: https://docs.corgea.app/policies
+version: 1  # Specifies the version of the corgea YAML standard being used. Update only if the standard changes.
+policies:
+  - type: "scan"
+    description: >
+      This section defines directories to exclude from security scans in the backend code.
+      The 'migrations' directory is used for database schema changes and typically does not
+      contain executable code, but it should be checked for SQL injection vulnerabilities.
+      The 'config' directory contains configuration files that may include sensitive data
+      such as credentials or API keys. It's important to ensure these files are not exposed
+      to unauthorized access and are properly secured.
+      Additional checks include:
+      - Validate SQL queries to prevent injection attacks.
+      - Ensure configuration files are encrypted and access is restricted.
+
+  - type: "false_positive"
+    description: >
+      Identify and flag potential false positive vulnerabilities by analyzing patterns that
+      commonly lead to incorrect vulnerability detection, such as overly broad regex patterns
+      or misconfigured security rules. This policy aims to reduce noise in vulnerability reports
+      by ensuring that only genuine security issues are highlighted.
+    cwes:
+      - 22
+
+  - type: "fix"
+    description: >
+      This policy ensures validation of file paths to prevent unauthorized access, proper closure
+      of resources post-use, and sanitization of user inputs to avert command injection.
+    cwes:
+      - 22
+      - 25
+      - 78

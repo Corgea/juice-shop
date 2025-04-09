@@ -1,0 +1,10 @@
+# This is the corgea YAML file used for defining and managing security policies within applications.
+# For more information, visit: https://docs.corgea.app/policies
+version: 1  # Specifies the version of the corgea YAML standard being used. Update only if the standard changes.
+policies:
+  - type: "scan"
+    description: >
+      This frontend is part of a deliberately vulnerable application designed for testing and educational purposes.
+      It should pay attention to vulnerabilities such as Cross-Site Scripting (XSS), where user inputs are not properly sanitized,
+      and potential exposure of sensitive data through improper handling of user inputs and outputs.
+      Ensuring that user inputs are validated and encoded before being displayed is crucial to mitigate these risks.
